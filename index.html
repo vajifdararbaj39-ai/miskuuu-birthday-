@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mikuu! ❤️</title>
+    <style>
+        :root {
+            --bg-color: #fff0f3;
+            --primary-color: #ff4d6d;
+            --accent-color: #c9184a;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Lock Screen */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #lock-screen h2 { font-size: 2.2rem; margin-bottom: 10px; }
+        #lock-screen input {
+            padding: 14px 22px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            text-align: center;
+            width: 85%;
+            max-width: 320px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        #lock-screen button {
+            padding: 12px 30px;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        #main-content {
+            display: none;
+            padding: 20px 15px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 30px 20px;
+            margin: 35px 0;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.15);
+            border: 1px solid #ffccd5;
+        }
+
+        h1, h2 { color: var(--accent-color); }
+
+        .sticker-header { font-size: 3rem; margin-bottom: 10px; }
+
+        .shayari-box {
+            background: #fff5f7;
+            border-left: 4px solid var(--primary-color);
+            padding: 18px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            border-radius: 0 15px 15px 0;
+            color: #555;
+        }
+
+        .letter-body {
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            background: #fff9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed #ffb3c1;
+            color: #444;
+        }
+
+        /* Photo Frame */
+        .photo-frame {
+            width: 100%;
+            max-width: 320px;
+            margin: 15px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Video Containers */
+        .video-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 15px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--primary-color);
+            background: #000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Game Area */
+        #game-container {
+            height: 240px;
+            background: #ffe6ea;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed var(--primary-color);
+            margin-top: 15px;
+        }
+
+        .bite-target {
+            position: absolute;
+            font-size: 2.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+
+        .bite-target:active { transform: scale(0.8); }
+
+        /* Vouchers */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .interactive-card {
+            background: #ff4d6d;
+            color: white;
+            padding: 18px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .interactive-card:hover { transform: translateY(-3px); }
+
+        /* Background Hearts */
+        .bg-heart {
+            position: fixed;
+            color: rgba(255, 77, 109, 0.25);
+            font-size: 1.5rem;
+            animation: float 7s infinite linear;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        /* Audio Floating Bar */
+        #audio-bar {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Song (File name: song.mp4) -->
+    <audio id="bg-music" loop>
+        <source src="song.mp4" type="video/mp4">
+    </audio>
+
+    <div id="audio-bar">
+        <span>🎵 Song Playing</span>
+        <button onclick="toggleMusic()" id="music-btn" style="background:var(--primary-color); color:white; border:none; padding:5px 12px; border-radius:15px; font-weight:bold; cursor:pointer;">Pause</button>
+    </div>
+
+    <!-- Lock Screen (Password: 2010) -->
+    <div id="lock-screen">
+        <h2>Hey Mikuu! 🌸</h2>
+        <p>Website unlock karne ke liye Password daalo:</p>
+        <input type="text" id="passphrase" placeholder="Enter password...">
+        <button onclick="checkPass()">Unlock Surprise ✨</button>
+        <p id="error-msg" style="color: #fff; font-size: 0.95rem; margin-top: 15px; display:none; background: rgba(0,0,0,0.2); padding: 8px 15px; border-radius: 15px;">❌ Galat Password! "2010" daalo 😉</p>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        
+        <!-- Welcome & Photo Section -->
+        <div class="section">
+            <div class="sticker-header">🎂 🎉 ✨</div>
+            <h1>Happy Birthday Miskat! ❤️</h1>
+            <p style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">(My Dearest Mikuu)</p>
+            <p>Aaj ka ye poora page sirf tumhare liye hai! Aaram se scroll karo... 💖</p>
+            
+            <!-- Photo File Name: photo1.jpg -->
+            <div class="photo-frame">
+                <img src="photo1.jpg" alt="Mikuu Photo">
+            </div>
+        </div>
+
+        <!-- Shayari Section -->
+        <div class="section">
+            <div class="sticker-header">📜 💖</div>
+            <h2>Special Birthday Shayari</h2>
+            <div class="shayari-box">
+                "Chehre par khushi aur aankhon me noor ho,<br>
+                Tum jo chaho wo sab tumko manzoor ho.<br>
+                Birthday par mile tumhein duniya ki har khushi,<br>
+                Meri duayein hamesha tumhare sath ho!" ✨
+            </div>
+            <div class="shayari-box">
+                "Teri muskaan se roshan meri har subah hoti hai,<br>
+                Tu paas na ho phir bhi teri mehak hoti hai.<br>
+                Mikuu, tum paas raho ya door,<br>
+                Dil me bas tumhare hi pyar ki jagah hoti hai!" 🌹
+            </div>
+        </div>
+
+        <!-- Video 1: Cake Cutting -->
+        <div class="section">
+            <div class="sticker-header">🎂 🎥</div>
+            <h2>Cake Cutting Special (Video 1)</h2>
+            <p>Wo pyaara sa lamha jab cake kata gaya...</p>
+            <div class="video-container">
+                <video controls loop>
+                    <source src="cake.mp4" type="video/mp4">
+                    Your browser does not support video.
+                </video>
+            </div>
+        </div>
+
+        <!-- Love Letter Section 1 -->
+        <div class="section">
+            <div class="sticker-header">💌 🧸</div>
+            <h2>A Sweet Message For You</h2>
+            <div class="letter-body">
+                <strong>Dear Mikuu,</strong><br><br>
+                Aaj tumhara birthday hai aur mere paas kehne ko bohot kuch hai. Jab se tum meri life me aayi ho, sab kuch bohot pyaara lagne laga hai.<br><br>
+                Tumhari wo cute baatein, tumhara gussa, aur tumhara pyaar se baat karna... sab mere dil ke bohot kareeb hai. Meri bas yahi dua hai ki tum hamesha muskuraati raho, kabhi koi dukh tumhare paas na aaye. 💖
+            </div>
+        </div>
+
+        <!-- Video 2: Propose Video -->
+        <div class="section">
+            <div class="sticker-header">💍 💖</div>
+            <h2>The Special Propose Moment (Video 2)</h2>
+            <p>Ye wo pal hai jo mere dil ke sabse kareeb hai...</p>
+            <div class="video-container">
+                <video controls loop>
+                    <source src="propose.mp4" type="video/mp4">
+                    Your browser does not support video.
+                </video>
+            </div>
+        </div>
+
+        <!-- Interactive Game Section -->
+        <div class="section">
+            <div class="sticker-header">🎮 💋</div>
+            <h2>Love Bite Game!</h2>
+            <p>Screen par aane wale <strong>Love Bites / Hearts</strong> par click karke 5 points score karo!</p>
+            <p style="font-weight: bold; font-size: 1.2rem; color: var(--accent-color);">Score: <span id="score">0</span>/5</p>
+            
+            <div id="game-container"></div>
+            <div id="game-reward" style="display: none; margin-top: 15px; background: #ffe6ea; padding: 15px; border-radius: 15px; color: var(--accent-color); font-weight: bold;">
+                🎉 Yay! You caught all 5 Love Bites! <br> Reward: Unlimited Hugs & Kisses from me! 😘🤗
+            </div>
+        </div>
+
+        <!-- Gift Vouchers -->
+        <div class="section">
+            <div class="sticker-header">🎟️ 🎁</div>
+            <h2>Your Birthday Gift Vouchers</h2>
+            <p>Cards par click karke dekho tumhein kya mila hai:</p>
+            <div class="card-grid">
+                <div class="interactive-card" onclick="alert('🎟️ Coupon Unlocked:\n\n1 Free Ice Cream & Coffee Date with Arbaz! 🍦☕')">🍦 Sweet Date</div>
+                <div class="interactive-card" onclick="alert('🎟️ Coupon Unlocked:\n\n1 Full Day NO ARGUMENT Guarantee! Aaj Arbaz bilkul gussa nahi karega! 😇')">😇 Zero Quarrel</div>
+                <div class="interactive-card" onclick="alert('🎟️ Coupon Unlocked:\n\nLate Night Unlimited Call & Secrets Sharing Session! 📞✨')">📞 Late Night Call</div>
+                <div class="interactive-card" onclick="alert('🎟️ Coupon Unlocked:\n\nExtra Tight Hug reserved for Mikuu! 🤗💖')">🤗 Special Hug</div>
+            </div>
+        </div>
+
+        <!-- Grand Final Love Letter -->
+        <div class="section">
+            <div class="sticker-header">👑 💗</div>
+            <h2>The Final Special Love Letter</h2>
+            <div class="letter-body">
+                <strong>Meri Pyaari Mikuu,</strong><br><br>
+                Main yeh poora page banate waqt sirf yahi soch raha tha ki jab tum ise khologi toh tumhare chehre par kitni pyari smile hogi. Tum mere liye sirf ek dost nahi, meri poori duniya ho. Tumhari har ek ada par mujhe pyaar aata hai.<br><br>
+                Zindagi ke har mod par main tumhare sath rahunga, chahe halaat kaise bhi hon. Tumne meri life ko roshan kar diya hai. Tumhe wo saari khushiyaan milein jinki tum haqdaar ho.<br><br>
+                Aapko birthday ki bohot bohot mubarakbaad meri jaan! Hamesha aise hi hasta muskurata rehna.<br><br>
+                <div style="text-align: right; font-weight: bold; margin-top: 15px;">
+                    ~ Yours & Only Yours,<br>Arbaz ❤️
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <p style="font-size: 0.9rem; color: #888; margin-top: 30px;">Made with lots of Love & Effort for Miskat (Mikuu) 💖</p>
+
+    </div>
+
+    <script>
+        function checkPass() {
+            const input = document.getElementById('passphrase').value.trim();
+            const error = document.getElementById('error-msg');
+            
+            // Password Check (2010)
+            if (input === "2010") {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('audio-bar').style.display = 'flex';
+                
+                // Play Background Music
+                const music = document.getElementById('bg-music');
+                music.play().catch(e => console.log("Audio play blocked by browser"));
+                
+                // Start game & animations
+                createFloatingHearts();
+                spawnTarget();
+            } else {
+                error.style.display = 'block';
+            }
+        }
+
+        // Music Toggle Control
+        let isPlaying = true;
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (isPlaying) {
+                music.pause();
+                btn.innerText = "Play";
+                isPlaying = false;
+            } else {
+                music.play();
+                btn.innerText = "Pause";
+                isPlaying = true;
+            }
+        }
+
+        // Mini Game Logic
+        let score = 0;
+        const targets = ['💋', '💖', '😘', '❤️', '💌'];
+
+        function spawnTarget() {
+            if (score >= 5) return;
+
+            const container = document.getElementById('game-container');
+            const target = document.createElement('div');
+            target.className = 'bite-target';
+            target.innerHTML = targets[Math.floor(Math.random() * targets.length)];
+            
+            const x = Math.random() * (container.clientWidth - 50);
+            const y = Math.random() * (container.clientHeight - 50);
+            
+            target.style.left = x + 'px';
+            target.style.top = y + 'px';
+
+            target.onclick = function() {
+                score++;
+                document.getElementById('score').innerText = score;
+                target.remove();
+                if (score < 5) {
+                    spawnTarget();
+                } else {
+                    document.getElementById('game-reward').style.display = 'block';
+                }
+            };
+
+            container.appendChild(target);
+        }
+
+        // Floating Hearts Background Animation
+        function createFloatingHearts() {
+            for (let i = 0; i < 18; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bg-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                document.body.appendChild(heart);
+            }
+        }
+    </script>
+</body>
+  </html>
+  
